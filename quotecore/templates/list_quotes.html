@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h2 xmlns="http://www.w3.org/1999/html">{% translate "Quotes list" %}</h2>
+    <div class="grid-container">
+            {% for quote in quotes %}
+        <p><i class="bi bi-quote" style="color: #772953; font-size: 150%;"></i>&nbsp;{{ quote.text }} <br/>
+                {% translate " by: " %} {{quote.author}}
+                {% if quote.source %}
+                    <br/>
+                    {% translate " Source: " %} {{quote.source}}
+                {% endif %}
+                <br/>
+                {% translate "Category(ies): " %}
+                {% for category in quote.category.values %}
+                    {{ category.label }}
+                {% endfor %}
+            </p>
+        {% endfor %}
+    </div>
+{% endblock content %}

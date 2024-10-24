@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% translate "Authors list" %}</h2>
+    <div class="grid-container-2col">
+        {% if authors %}
+            <ul>
+                {% for author in authors %}
+                    <li>{{ author }} &nbsp;
+                        <a href="{% url 'list-quotes-author' author.id %}" title="{% translate 'See all quotes for this author' %}"><i class="bi bi-eye"></i></a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'work-in-progress' %}" title="{% translate 'Edit this author' %}"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'work-in-progress' %}" title="{% translate 'Delete this author' %}"><i class="bi bi-trash"></i></a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p><i class="bi bi-emoji-tear" style="color: #772953; font-size: 150%;" ></i>
+                {% translate "Sorry, no author in application yet." %}
+            </p>
+            <p>{% translate "Time maybe to add your first author using this" %}
+                <a href="{% url 'add-author' %}">{% translate "form" %}</a>
+            </p>
+        {% endif %}
+    </div>
+{% endblock content %}

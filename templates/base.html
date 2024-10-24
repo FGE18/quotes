@@ -1,0 +1,50 @@
+{% load i18n %}
+{% load static %}
+
+<html>
+    <head>
+        <title>{% translate "Quotes" %}</title>
+        <link rel="stylesheet" href="{% static 'app.css' %}">
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap-icons/font/bootstrap-icons.css' %}">
+    </head>
+    <body>
+        <div class="sidebar">
+            <h1><i class="bi bi-chat-right-quote">&nbsp;{% translate "Quotes" %} </i></h1>
+            {% if user.is_authenticated %}
+                <p>{% translate "Connected as " %} {{ user.username }}</p>
+            {% endif %}
+            <p><a href="{% url 'home' %}">{% translate "Home" %}</a></p>
+            <p>{% translate "Quotes" %}</p>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'add-quote' %}">{% translate "Add quote" %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'list-quotes' %}">{% translate "List quotes" %}</a></li>
+                <li><a href="{% url 'work-in-progress' %}">{% translate "Search quote" %}</a></li>
+            </ul>
+            <p>{% translate "Authors" %}</p>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'add-author' %}">{% translate "Add author" %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'list-authors' %}">{% translate "List authors" %}</a></li>
+                <li><a href="{% url 'work-in-progress' %}">{% translate "Search author" %}</a></li>
+            </ul>
+            <p>{% translate "Categories" %}</p>
+            <ul>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'add-category' %}">{% translate "Add category" %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'list-categories' %}">{% translate "List categories" %}</a></li>
+                <li><a href="{% url 'work-in-progress' %}">{% translate "Search category" %}</a></li>
+            </ul>
+            <p><a href="{% url 'admin:index' %}">{% translate "Admin" %}</a></p>
+            <p><a href="{% url 'about' %}">{% translate "About" %}</a></p>
+        </div>
+        <div class="main">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>

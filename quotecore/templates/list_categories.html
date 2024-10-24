@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% translate "Categories list" %}</h2>
+    <div class="grid-container-4col">
+        {% if categories %}
+            <ul>
+                {% for category in categories %}
+                    <li>
+                        {{ category.label }}
+                        <a href="{% url 'list-quotes-category' category.id %}" title="{% translate 'See all quotes for this category' %}"><i class="bi bi-eye"></i></a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'work-in-progress' %}" title="{% translate 'Edit this category' %}"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'work-in-progress' %}" title="{% translate 'Delete this category' %}"><i class="bi bi-trash"></i></a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p><i class="bi bi-emoji-tear" style="color: #772953; font-size: 150%;" ></i>
+                {% translate "Sorry, no category in application yet." %}
+            </p>
+            <p>{% translate "Time maybe to add your first category using this" %}
+                <a href="{% url 'add-category' %}">{% translate "form" %}</a>
+            </p>
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% translate "About..." %}</h2>
+    <div class="grid-container">
+        <p>{% translate "Developer:" %} {{ app_developers }}</p>
+        <p>{% translate "Version:" %} {{ app_version }}</p>
+        <p>{% translate "License:" %} {{ app_license }}</p>
+        <p>{% translate "Repository:" %} {{ app_repository }}</p>
+
+    </div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{{ category.label }} {% translate " quotes list" %}</h2>
+
+    <div class="grid-container">
+        {% if quotes %}
+            {% for quote in quotes %}
+                <p><i class="bi bi-quote" style="color: #772953; font-size: 150%;" ></i>&nbsp;{{ quote.text }}<br/>
+                    {% translate "Author: " %}  {{ quote.author }}
+                    {% if quote.source %}
+                        <br/>{% translate " Source: " %} {{quote.source}}
+                    {% endif %}
+                 </p>
+            {% endfor %}
+        {% else %}
+            <p><i class="bi bi-emoji-tear" style="color: #772953; font-size: 150%;" ></i>
+                {% translate "Sorry, nothing here for this category." %}
+            </p>
+            <p>{% translate "Time maybe to add your first quote for this category using this" %}
+                <a href="{% url 'add-quote' %}">{% translate "form" %}</a>
+            </p>
+        {% endif %}
+    </div>
+{% endblock content %}
