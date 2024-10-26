@@ -2,12 +2,12 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{% translate "Adding an author" %}</h2>
+    <h2>{% translate "Editing an author" %}</h2>
     <div class="grid-container">
         <form action="" method="post">
-            {{ form.as_p }}
+            {{ edit_form.as_p }}
             {% csrf_token %}
-            <input type="submit" value="{% translate 'Add' %}">
+            <input type="submit" value="{% translate 'Save' %}">
         </form>
     </div>
 {% endblock content %}

@@ -9,6 +9,16 @@
         <link rel="stylesheet" href="{% static 'bootstrap-icons/font/bootstrap-icons.css' %}">
     </head>
     <body>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <div class="sidebar">
             <h1><i class="bi bi-chat-right-quote">&nbsp;{% translate "Quotes" %} </i></h1>
             {% if user.is_authenticated %}

@@ -4,18 +4,27 @@
 {% block content %}
 <h2 xmlns="http://www.w3.org/1999/html">{% translate "Quotes list" %}</h2>
     <div class="grid-container">
-            {% for quote in quotes %}
+        {% for quote in quotes %}
         <p><i class="bi bi-quote" style="color: #772953; font-size: 150%;"></i>&nbsp;{{ quote.text }} <br/>
-                {% translate " by: " %} {{quote.author}}
-                {% if quote.source %}
-                    <br/>
-                    {% translate " Source: " %} {{quote.source}}
-                {% endif %}
+            {% translate " by: " %} {{quote.author}}
+            {% if quote.source %}
                 <br/>
-                {% translate "Category(ies): " %}
-                {% for category in quote.category.values %}
-                    {{ category.label }}
-                {% endfor %}
+                {% translate " Source: " %} {{quote.source}}
+            {% endif %}
+            <br/>
+            {% blocktranslate count count=quote.category.values|length %}
+                Category:
+            {% plural %}
+                Categories:
+            {% endblocktranslate %}
+            {% for category in quote.category.values %}
+                {{ category.label }}
+            {% endfor %}
+            {% if user.is_authenticated %}
+                <br/>
+                <a href="{% url 'edit-quote' quote.id %}" title="{% translate 'Edit this quote' %}"><i class="bi bi-pencil"></i></a>
+                <a href="{% url 'delete-quote' quote.id %}" title="{% translate 'Delete this quote' %}"><i class="bi bi-trash"></i></a>
+            {% endif %}
             </p>
         {% endfor %}
     </div>

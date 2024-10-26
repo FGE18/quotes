@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% translate "Deleting category" %} {{ category.label }}</h2>
+    <p>{% translate "Be careful, deletion is definitive. No restoration possible." %}</p>
+    <div class="grid-container">
+        <form action="" method="post">
+            {{ delete_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="{% translate 'Delete' %}">
+        </form>
+    </div>
+{% endblock content %}

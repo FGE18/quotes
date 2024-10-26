@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+    <h2>{% translate "Deleting author" %} {{ author.first_name }} {{ author.last_name }}
+        {% if author.pseudonym %}
+            ({{ author.pseudonym }})
+        {% endif %}
+    </h2>
+    <p>{% translate "Be careful, deletion is definitive. Deleting this author will remove it AND all its quotes ; No restoration possible." %}</p>
+    <div class="grid-container">
+        <form action="" method="post">
+            {{ delete_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="{% translate 'Delete' %}">
+        </form>
+    </div>
+{% endblock content %}

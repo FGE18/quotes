@@ -27,6 +27,12 @@ urlpatterns = [
     path('add-author/', quotecore.views.add_author, name='add-author'),
     path('add-category/', quotecore.views.add_category, name='add-category'),
     path('add-quote/', quotecore.views.add_quote, name='add-quote'),
+    path('delete-author/<int:author_id>/', quotecore.views.delete_author, name='delete-author'),
+    path('delete-category/<int:category_id>/', quotecore.views.delete_category, name='delete-category'),
+    path('delete-quote/<int:quote_id>/', quotecore.views.delete_quote, name='delete-quote'),
+    path('edit-author/<int:author_id>/', quotecore.views.edit_author, name='edit-author'),
+    path('edit-category/<int:category_id>/', quotecore.views.edit_category, name='edit-category'),
+    path('edit-quote/<int:quote_id>/', quotecore.views.edit_quote, name='edit-quote'),
     path('admin/', admin.site.urls),
     path('list-authors/', quotecore.views.list_authors, name='list-authors'),
     path('list-categories/', quotecore.views.list_categories, name='list-categories'),
@@ -36,6 +42,4 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('work-in-progress/', quotecore.views.work_in_progress, name='work-in-progress'),
-
-
 ]

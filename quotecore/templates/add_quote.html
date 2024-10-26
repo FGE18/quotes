@@ -5,9 +5,9 @@
     <h2>{% translate "Adding a quote" %}</h2>
     <div class="grid-container">
         <form action="" method="post">
-            {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Add">
+            {% csrf_token %}
+            <input type="submit" value="{% translate 'Add' %}">
         </form>
     </div>
 {% endblock content %}

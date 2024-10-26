@@ -62,4 +62,4 @@ class Quote(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name=_('quotes'), verbose_name=_("Authors"))
     category = models.ManyToManyField(Category)
     source = models.CharField(max_length=256, blank=True, null=True, verbose_name=_("Source"))
-    text = models.CharField(max_length=1024, verbose_name=_("Text"))
+    text = models.TextField(max_length=1024, verbose_name=_("Text"))

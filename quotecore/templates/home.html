@@ -12,8 +12,12 @@
                     <br/>
                     {% translate " Source: " %} {{ quote.source }}
                 {% endif %}
-                    <br/>
-                {% translate "Category(ies): " %}
+                <br/>
+                {% blocktranslate count count=quote.category.values|length %}
+                    Category:
+                {% plural %}
+                    Categories:
+                {% endblocktranslate %}
                 {% for category in quote.category.values %}
                     {{ category.label }}
                 {% endfor %}

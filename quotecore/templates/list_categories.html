@@ -11,8 +11,8 @@
                         {{ category.label }}
                         <a href="{% url 'list-quotes-category' category.id %}" title="{% translate 'See all quotes for this category' %}"><i class="bi bi-eye"></i></a>
                         {% if user.is_authenticated %}
-                            <a href="{% url 'work-in-progress' %}" title="{% translate 'Edit this category' %}"><i class="bi bi-pencil"></i></a>
-                            <a href="{% url 'work-in-progress' %}" title="{% translate 'Delete this category' %}"><i class="bi bi-trash"></i></a>
+                            <a href="{% url 'edit-category' category.id %}" title="{% translate 'Edit this category' %}"><i class="bi bi-pencil"></i></a>
+                            <a href="{% url 'delete-category' category.id %}" title="{% translate 'Delete this category' %}"><i class="bi bi-trash"></i></a>
                         {% endif %}
                     </li>
                 {% endfor %}

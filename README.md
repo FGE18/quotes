@@ -23,4 +23,4 @@ Pull requests are welcome.
 * Bootstrap icons
 
 ## License
-LimeSurvey software is licensed under the [GPL3.0] (https://www.gnu.org/licenses/gpl-3.0.html).
+Quotes software is licensed under the [GPL3.0] (https://www.gnu.org/licenses/gpl-3.0.html).

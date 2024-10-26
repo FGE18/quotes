@@ -7,7 +7,7 @@
         <p>{% translate "Developer:" %} {{ app_developers }}</p>
         <p>{% translate "Version:" %} {{ app_version }}</p>
         <p>{% translate "License:" %} {{ app_license }}</p>
-        <p>{% translate "Repository:" %} {{ app_repository }}</p>
-
+        <p>{% translate "Repository:" %} <a href="{{ app_repository }}" title="{% translate 'Quotes GitHub' %}">
+            {% translate 'Quotes GitHub' %}</a></p>
     </div>
 {% endblock content %}
