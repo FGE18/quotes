@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{{ category.label }} {% translate " quotes list" %}</h2>
+    <h2>{% translate "Quotes list for category: " %} {{ category.label }}</h2>
 
     <div class="grid-container">
         {% if quotes %}
@@ -15,7 +15,7 @@
                     {% if user.is_authenticated %}
                         <br/>
                         <a href="{% url 'edit-quote' quote.id %}" title="{% translate 'Edit this quote' %}"><i class="bi bi-pencil"></i></a>
-                        <a href="{% url 'work-in-progress' %}" title="{% translate 'Delete this quote' %}"><i class="bi bi-trash"></i></a>
+                        <a href="{% url 'delete-quote' quote.id %}" title="{% translate 'Delete this quote' %}"><i class="bi bi-trash"></i></a>
                     {% endif %}
                 </p>
         {% endfor %}

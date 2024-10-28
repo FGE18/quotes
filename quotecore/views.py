@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.text import gettext_lazy as _
-from quotecore.forms import QuoteForm, CategoryForm, AuthorForm
+from quotecore.forms import QuoteForm, CategoryForm, AuthorForm, SearchQuoteForm
 from quotecore.models import Author, Category, Quote
 
 
@@ -37,16 +37,13 @@ def delete_author(request, author_id):
     :return:
     """
     author = get_object_or_404(Author, id=author_id)
-    delete_form = AuthorForm(instance=author)
     if request.method == 'POST':
-        delete_form = AuthorForm(request.POST, instance=author)
-        if delete_form.is_valid():
-            if author.delete():
-                messages.success(request, _("Author deleted successfully"))
-                return redirect("list-authors")
-            else:
-                messages.error(request, _("Unable to delete author in database"))
-    return render(request, 'delete_author.html', {'delete_form': delete_form, 'author': author})
+        if author.delete():
+            messages.success(request, _("Author deleted successfully"))
+            return redirect("list-authors")
+        else:
+            messages.error(request, _("Unable to delete author in database"))
+    return render(request, 'delete_author.html', {'author': author})
 
 
 @login_required
@@ -110,16 +107,13 @@ def delete_category(request, category_id):
     :return:
     """
     category = get_object_or_404(Category, id=category_id)
-    delete_form = CategoryForm(instance=category)
     if request.method == 'POST':
-        delete_form = CategoryForm(request.POST, instance=category)
-        if delete_form.is_valid():
-            if category.delete():
-                messages.success(request, _("Category deleted successfully"))
-                return redirect("list-categories")
-            else:
-                messages.error(request, _("Unable to delete category in database"))
-    return render(request, 'delete_category.html', {'delete_form': delete_form, 'category': category})
+        if category.delete():
+            messages.success(request, _("Category deleted successfully"))
+            return redirect("list-categories")
+        else:
+            messages.error(request, _("Unable to delete category in database"))
+    return render(request, 'delete_category.html', {'category': category})
 
 
 @login_required
@@ -183,16 +177,13 @@ def delete_quote(request, quote_id):
     :return:
     """
     quote = get_object_or_404(Quote, id=quote_id)
-    delete_form = QuoteForm(instance=quote)
     if request.method == 'POST':
-        delete_form = QuoteForm(request.POST, instance=quote)
-        if delete_form.is_valid():
-            if quote.delete():
-                messages.success(request, _("Quote deleted successfully"))
-                return redirect("list-quotes")
-            else:
-                messages.error(request, _("Unable to delete quote in database"))
-    return render(request, 'delete_quote.html', {'delete_form': delete_form, 'quote': quote})
+        if quote.delete():
+            messages.success(request, _("Quote deleted successfully"))
+            return redirect("list-quotes")
+        else:
+            messages.error(request, _("Unable to delete quote in database"))
+    return render(request, 'delete_quote.html', {'quote': quote})
 
 
 @login_required
@@ -251,6 +242,25 @@ def list_quotes_category(request, category_id):
     authors = Author.objects.all()
     context = {'quotes': quotes, 'category': category, 'authors': authors}
     return render(request, 'list_quotes_category.html', context)
+
+
+def search_quotes(request):
+    """
+    Search all quotes containing search_string in text.
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        search_form = SearchQuoteForm(request.POST)
+        if search_form.is_valid():
+            results = Quote.objects.filter(text__icontains=str(search_form.cleaned_data["search_string"]))
+            info = str(results.count()) + _(" quotes found ") if results.count() > 1 else str(results.count()) + _(" quote found ")
+            info += _("for tag: ") + str(search_form.cleaned_data["search_string"])
+            messages.info(request, info)
+            return render(request, 'search_quote.html', {'search_form': search_form, 'results': results})
+    else:
+        search_form = SearchQuoteForm()
+        return render(request, 'search_quote.html', {'search_form': search_form})
 
 
 # Site pages

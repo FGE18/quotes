@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 0.3.0 - 2024/10/28
+### New features:
+- Search form for quotes.
+### Improvements:
+- Delete forms & templates refactoring to display a confirmation before deletion.
+- Cancel button added on all forms.
+
 ## Version 0.2.0 - 2024/10/26
 ### New features:
 - Flash messages implemented for actions information. 

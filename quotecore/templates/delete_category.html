@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load quotes_extras %}
 
 {% block content %}
     <h2>{% translate "Deleting category" %} {{ category.label }}</h2>
     <p>{% translate "Be careful, deletion is definitive. No restoration possible." %}</p>
+    <p>{% translate "You are about to delete " %} <i>{{ category.label }}</i> {% translate "Please confirm deletion." %}</p>
     <div class="grid-container">
         <form action="" method="post">
-            {{ delete_form.as_p }}
             {% csrf_token %}
             <input type="submit" value="{% translate 'Delete' %}">
+            {% cancel_button %}
         </form>
     </div>
 {% endblock content %}

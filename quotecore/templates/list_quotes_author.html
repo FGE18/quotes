@@ -2,11 +2,7 @@
 {% load i18n %}
 
 {% block content %}
-    <h2>{{ author.first_name }}  {{ author.last_name }}
-        {% if author.pseudonym %}
-            ({{author.pseudonym}})
-        {% endif %}
-    {% translate " quotes list" %}</h2>
+    <h2>{% translate "Quotes list from author: " %}{{ author }}</h2>
     <h3>(
         {{ author.birth_date|date:"d F Y" }}
         {% if author.death_date %}
@@ -24,7 +20,7 @@
                 {% if user.is_authenticated %}
                     <br/>
                     <a href="{% url 'edit-quote' quote.id %}" title="{% translate 'Edit this quote' %}"><i class="bi bi-pencil"></i></a>
-                    <a href="{% url 'work-in-progress' %}" title="{% translate 'Delete this quote' %}"><i class="bi bi-trash"></i></a>
+                    <a href="{% url 'delete-quote' quote.id %}" title="{% translate 'Delete this quote' %}"><i class="bi bi-trash"></i></a>
                 {% endif %}
                 </p>
             {% endfor %}

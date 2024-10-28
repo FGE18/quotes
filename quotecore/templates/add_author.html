@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load quotes_extras %}
 
 {% block content %}
     <h2>{% translate "Adding an author" %}</h2>
@@ -8,6 +9,7 @@
             {{ form.as_p }}
             {% csrf_token %}
             <input type="submit" value="{% translate 'Add' %}">
+            {% cancel_button %}
         </form>
     </div>
 {% endblock content %}

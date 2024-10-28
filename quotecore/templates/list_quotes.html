@@ -6,10 +6,10 @@
     <div class="grid-container">
         {% for quote in quotes %}
         <p><i class="bi bi-quote" style="color: #772953; font-size: 150%;"></i>&nbsp;{{ quote.text }} <br/>
-            {% translate " by: " %} {{quote.author}}
+            {% translate " by: " %} {{ quote.author }}
             {% if quote.source %}
                 <br/>
-                {% translate " Source: " %} {{quote.source}}
+                {% translate " Source: " %} {{ quote.source }}
             {% endif %}
             <br/>
             {% blocktranslate count count=quote.category.values|length %}

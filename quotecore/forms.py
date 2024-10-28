@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.text import gettext_lazy as _
 from . import models
 
 class AuthorForm(forms.ModelForm):
@@ -17,3 +18,7 @@ class QuoteForm(forms.ModelForm):
     class Meta:
         model = models.Quote
         fields = '__all__'
+
+
+class SearchQuoteForm(forms.Form):
+    search_string = forms.CharField(label=_("Tag for search"), max_length=64, required=True)
