@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load quotes_extras %}
+
+{% block content %}
+    <h2>{% translate "Searching a category" %}</h2>
+    <div class="grid-container">
+        <form action="" method="post">
+            {{ search_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="{% translate 'Search' %}">
+            {% cancel_button %}
+        </form>
+    </div>
+    {% if results %}
+    <div class="grid-container">
+        <ul>
+        {% for category in results %}
+            <li>
+                <a href="{% url 'list-quotes-category' category.id %}" title="{% translate 'See all quotes for this category' %}">{{ category.label }}</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'edit-category' category.id %}" title="{% translate 'Edit this category' %}"><i class="bi bi-pencil"></i></a>
+                    <a href="{% url 'delete-category' category.id %}" title="{% translate 'Delete this category' %}"><i class="bi bi-trash"></i></a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock content %}

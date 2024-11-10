@@ -75,6 +75,10 @@ body { background-color: silver; }
 	z-index: 10;
 }
 
+span.pagination {
+	text-align: center;
+}
+
 ul.messages {
     margin-left: 300px;
     padding: 0;

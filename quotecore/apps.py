@@ -5,6 +5,7 @@ class QuotecoreConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'quotecore'
     developers = 'Franck GERVAIS'
-    version = '0.3.0'
     license = 'GPL3'
+    pagination_size = 20
     repository = 'https://github.com/FGE18/quotes'
+    version = '0.4.0'

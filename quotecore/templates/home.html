@@ -18,9 +18,11 @@
                 {% plural %}
                     Categories:
                 {% endblocktranslate %}
-                {% for category in quote.category.values %}
-                    {{ category.label }}
-                {% endfor %}
+                {% if quote.category.values %}
+                    {% for category in quote.category.values %}
+                        {{ category.label }}
+                    {% endfor %}
+                {% endif %}
             </p>
     {% endfor %}
     </div>

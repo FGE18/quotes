@@ -4,7 +4,7 @@
 {% block content %}
 <h2 xmlns="http://www.w3.org/1999/html">{% translate "Quotes list" %}</h2>
     <div class="grid-container">
-        {% for quote in quotes %}
+        {% for quote in page_quotes %}
         <p><i class="bi bi-quote" style="color: #772953; font-size: 150%;"></i>&nbsp;{{ quote.text }} <br/>
             {% translate " by: " %} {{ quote.author }}
             {% if quote.source %}
@@ -17,9 +17,11 @@
             {% plural %}
                 Categories:
             {% endblocktranslate %}
-            {% for category in quote.category.values %}
-                {{ category.label }}
-            {% endfor %}
+            {% if quote.category.values %}
+                {% for category in quote.category.values %}
+                    {{ category.label }}
+                {% endfor %}
+            {% endif %}
             {% if user.is_authenticated %}
                 <br/>
                 <a href="{% url 'edit-quote' quote.id %}" title="{% translate 'Edit this quote' %}"><i class="bi bi-pencil"></i></a>
@@ -27,5 +29,16 @@
             {% endif %}
             </p>
         {% endfor %}
+        <span class="pagination" style="text-align:center">
+            {% if page_quotes.has_previous %}
+                <a href="?page=1" title='{% translate "First" %}'><i class="bi bi-chevron-bar-left"></i></a>
+                <a href="?page={{ page_quotes.previous_page_number }}" title='{% translate "Previous" %}'><i class="bi bi-chevron-double-left"></i></a>
+            {% endif %}
+            {% blocktranslate with page_nbr=page_quotes.number %}Page {{ page_nbr }} on {% endblocktranslate %} {{ page_quotes.paginator.num_pages }}
+            {% if page_quotes.has_next %}
+                <a href="?page={{ page_quotes.next_page_number }}" title="{% translate 'Next' %}"><i class="bi bi-chevron-double-right"></i></a>
+                <a href="?page={{ page_quotes.paginator.num_pages }}" title='{% translate "Last" %}'><i class="bi bi-chevron-bar-right"></i></a>
+            {% endif %}
+        </span>
     </div>
 {% endblock content %}

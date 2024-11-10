@@ -20,5 +20,5 @@ class QuoteForm(forms.ModelForm):
         fields = '__all__'
 
 
-class SearchQuoteForm(forms.Form):
+class SearchForm(forms.Form):
     search_string = forms.CharField(label=_("Tag for search"), max_length=64, required=True)

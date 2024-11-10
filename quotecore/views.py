@@ -1,9 +1,10 @@
 from django.apps import apps
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.text import gettext_lazy as _
-from quotecore.forms import QuoteForm, CategoryForm, AuthorForm, SearchQuoteForm
+from quotecore.forms import QuoteForm, CategoryForm, AuthorForm, SearchForm
 from quotecore.models import Author, Category, Quote
 
 
@@ -215,7 +216,10 @@ def list_quotes(request):
     """
     quotes = Quote.objects.all().order_by('author')
     authors = Author.objects.all()
-    return render(request, 'list_quotes.html', {'quotes': quotes, 'authors': authors})
+    paginator = Paginator(quotes, apps.get_app_config('quotecore').pagination_size)
+    page_number = request.GET.get('page')
+    page_quotes = paginator.get_page(page_number)
+    return render(request, 'list_quotes.html', {'page_quotes': page_quotes, 'authors': authors})
 
 
 def list_quotes_author(request, author_id):
@@ -244,6 +248,26 @@ def list_quotes_category(request, category_id):
     return render(request, 'list_quotes_category.html', context)
 
 
+def search_category(request):
+    """
+    Search a category containing search_string.
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        search_form = CategoryForm(request.POST)
+        if search_form.is_valid():
+            results = Category.objects.filter(label__icontains=str(search_form.cleaned_data["label"]))
+            info = str(results.count())
+            info += _(" categories found ") if results.count() > 1 else _(" category found ")
+            info += _("for label: ") + str(search_form.cleaned_data["label"])
+            messages.info(request, info)
+            return render(request, 'search_category.html', {'search_form': search_form, 'results': results})
+    else:
+        search_form = CategoryForm()
+        return render(request, 'search_category.html', {'search_form': search_form})
+
+
 def search_quotes(request):
     """
     Search all quotes containing search_string in text.
@@ -251,15 +275,16 @@ def search_quotes(request):
     :return:
     """
     if request.method == 'POST':
-        search_form = SearchQuoteForm(request.POST)
+        search_form = SearchForm(request.POST)
         if search_form.is_valid():
             results = Quote.objects.filter(text__icontains=str(search_form.cleaned_data["search_string"]))
-            info = str(results.count()) + _(" quotes found ") if results.count() > 1 else str(results.count()) + _(" quote found ")
+            info = str(results.count())
+            info += _(" quotes found ") if results.count() > 1 else _(" quote found ")
             info += _("for tag: ") + str(search_form.cleaned_data["search_string"])
             messages.info(request, info)
             return render(request, 'search_quote.html', {'search_form': search_form, 'results': results})
     else:
-        search_form = SearchQuoteForm()
+        search_form = SearchForm()
         return render(request, 'search_quote.html', {'search_form': search_form})
 
 

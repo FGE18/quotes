@@ -1,8 +1,16 @@
 # Changelog
 
+## Version 0.4.0 - 2024/11/10
+### New features:
+- Category search form implemented.
+### Improvements:
+- Pagination added for list all quotes page.
+- Remove category display block if no category exists in quotes displaying.
+- Eye icon link replaced by direct link on items.
+
 ## Version 0.3.0 - 2024/10/28
 ### New features:
-- Search form for quotes.
+- Quotes search form implemented.
 ### Improvements:
 - Delete forms & templates refactoring to display a confirmation before deletion.
 - Cancel button added on all forms.
