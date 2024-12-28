@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load quotes_extras %}
+
+{% block content %}
+    <h2>{% translate "Searching an author" %}</h2>
+    <div class="grid-container">
+        {% translate "Search is carried out on the last name, first name and pseudonym fields." %}
+        <form action="" method="post">
+            {{ search_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="{% translate 'Search' %}">
+            {% cancel_button %}
+        </form>
+    </div>
+    {% if results %}
+    <div class="grid-container">
+        <ul>
+        {% for author in results %}
+            <li>
+                <a href="{% url 'list-quotes-author' author.id %}" title="{% translate 'See all quotes for this author' %}">{{ author }}</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'edit-author' author.id %}" title="{% translate 'Edit this author' %}"><i class="bi bi-pencil"></i></a>
+                    <a href="{% url 'delete-author' author.id %}" title="{% translate 'Delete this author' %}"><i class="bi bi-trash"></i></a>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock content %}

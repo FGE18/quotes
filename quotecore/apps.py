@@ -8,4 +8,4 @@ class QuotecoreConfig(AppConfig):
     license = 'GPL3'
     pagination_size = 20
     repository = 'https://github.com/FGE18/quotes'
-    version = '0.4.0'
+    version = '0.5.0'

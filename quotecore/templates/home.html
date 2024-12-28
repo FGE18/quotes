@@ -5,25 +5,31 @@
     <h2>{% translate "Welcome to Quotes" %}</h2>
     <div class="grid-container">
         <p>{% translate "Last quotes added:" %}</p>
-        {% for quote in quotes %}
-            <p><i class="bi bi-quote" style="color: #772953; font-size: 150%"></i>{{ quote.text }} <br/>
-                {% translate " by: " %} {{ quote.author }}
-                {% if quote.source %}
+        {% if quotes %}
+            {% for quote in quotes %}
+                <p><i class="bi bi-quote" style="color: #772953; font-size: 150%"></i>{{ quote.text }} <br/>
+                    {% translate " by: " %} {{ quote.author }}
+                    {% if quote.source %}
+                        <br/>
+                        {% translate " Source: " %} {{ quote.source }}
+                    {% endif %}
                     <br/>
-                    {% translate " Source: " %} {{ quote.source }}
-                {% endif %}
-                <br/>
-                {% blocktranslate count count=quote.category.values|length %}
-                    Category:
-                {% plural %}
-                    Categories:
-                {% endblocktranslate %}
-                {% if quote.category.values %}
-                    {% for category in quote.category.values %}
-                        {{ category.label }}
-                    {% endfor %}
-                {% endif %}
+                    {% blocktranslate count count=quote.category.values|length %}
+                        Category:
+                    {% plural %}
+                        Categories:
+                    {% endblocktranslate %}
+                    {% if quote.category.values %}
+                        {% for category in quote.category.values %}
+                            {{ category.label }}
+                        {% endfor %}
+                    {% endif %}
+                </p>
+            {% endfor %}
+        {% else %}
+            <p><i class="bi bi-emoji-tear" style="color: #772953; font-size: 150%;" ></i>
+                {% translate "Sorry, no quotes in application yet." %}
             </p>
-    {% endfor %}
+        {% endif %}
     </div>
 {% endblock content %}

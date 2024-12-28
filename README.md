@@ -12,6 +12,15 @@ Quotes is an application for quotes management based on Django framework.
 ```bash
 pip install -r requirements.txt
 ```
+* Create and initialize the database using the following commands:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+* Create an administrator account to manage application with this command:
+```bash
+python manage.py createsuperuser
+```
 
 ## Usage
 Open application with an Internet browser and enjoy...

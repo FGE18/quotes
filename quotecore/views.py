@@ -12,7 +12,7 @@ from quotecore.models import Author, Category, Quote
 @login_required
 def add_author(request):
     """
-    Adds a new author in the database. After creation user is redirected to a new empty form.
+    Function to adds a new author in the database. After creation user is redirected to a new empty form.
     :param request:
     :return:
     """
@@ -82,7 +82,7 @@ def list_authors(request):
 @login_required
 def add_category(request):
     """
-    Adds a new category in the database. After creation user is redirected to a new empty form.
+    Function to add a new category in the database. After creation user is redirected to a new empty form.
     :param request:
     :return:
     """
@@ -140,7 +140,7 @@ def edit_category(request, category_id):
 
 def list_categories(request):
     """
-    Lists all categories stored in database.
+    Function to lists all categories stored in database.
     :param request:
     :return:
     """
@@ -152,7 +152,7 @@ def list_categories(request):
 @login_required
 def add_quote(request):
     """
-    Add a new quote in the database. After creation user is redirected to a new empty form.
+    Function to add a new quote in the database. After creation user is redirected to a new empty form.
     :param request:
     :return:
     """
@@ -210,7 +210,7 @@ def edit_quote(request, quote_id):
 
 def list_quotes(request):
     """
-    List all quotes stored in database.
+    Function to list all quotes stored in database.
     :param request:
     :return:
     """
@@ -224,7 +224,7 @@ def list_quotes(request):
 
 def list_quotes_author(request, author_id):
     """
-    List all quotes for an author entered in parameter in the database.
+    Function to list all quotes for an author entered in parameter in the database.
     :param request:
     :param author_id: ID of the author
     :return:
@@ -236,7 +236,7 @@ def list_quotes_author(request, author_id):
 
 def list_quotes_category(request, category_id):
     """
-    List all quotes for a category entered in parameter in the database.
+    Function to list all quotes for a category entered in parameter in the database.
     :param request:
     :param category_id: ID of the category
     :return:
@@ -248,9 +248,32 @@ def list_quotes_category(request, category_id):
     return render(request, 'list_quotes_category.html', context)
 
 
+def search_author(request):
+    """
+    Function to search an author containing search_string in first_name, last_name or pseudonym fields.
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        search_form = SearchForm(request.POST)
+        if search_form.is_valid():
+            search_string = str(search_form.cleaned_data["search_string"])
+            results = Author.objects.filter(last_name__icontains=search_string) \
+                      | Author.objects.filter(first_name__icontains=search_string) \
+                      | Author.objects.filter(pseudonym__icontains=search_string)
+            info = str(results.count())
+            info += _(" authors found ") if results.count() > 1 else _(" author found ")
+            info += _("for tag: ") + search_string
+            messages.info(request, info)
+            return render(request, 'search_author.html', {'search_form': search_form, 'results': results})
+    else:
+        search_form =  SearchForm()
+        return render(request, 'search_author.html', {'search_form': search_form})
+
+
 def search_category(request):
     """
-    Search a category containing search_string.
+    Function to search a category containing search_string.
     :param request:
     :return:
     """
@@ -270,7 +293,7 @@ def search_category(request):
 
 def search_quotes(request):
     """
-    Search all quotes containing search_string in text.
+    Function to search all quotes containing search_string in text.
     :param request:
     :return:
     """
@@ -306,7 +329,7 @@ def about(request):
 
 def home(request):
     """
-    Application home page. This page returns the last 5 quotes added.
+    Function for application home page. This page returns the last 5 quotes added.
     :param request:
     :return:
     """

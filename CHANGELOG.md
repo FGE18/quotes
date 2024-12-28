@@ -1,4 +1,9 @@
 # Changelog
+## Version 0.5.0 - 2024/12/
+### New feature:
+- Author search form implemented.
+### Update:
+- Django updated from 5.1.1 to 5.1.4.
 
 ## Version 0.4.0 - 2024/11/10
 ### New features:

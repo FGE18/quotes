@@ -39,6 +39,7 @@ urlpatterns = [
     path('list-quotes-category/<int:category_id>/', quotecore.views.list_quotes_category, name='list-quotes-category'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('search-author/', quotecore.views.search_author, name='search-author'),
     path('search-category/', quotecore.views.search_category, name='search-category'),
     path('search-quote/', quotecore.views.search_quotes, name='search-quote'),
     path('work-in-progress/', quotecore.views.work_in_progress, name='work-in-progress'),
